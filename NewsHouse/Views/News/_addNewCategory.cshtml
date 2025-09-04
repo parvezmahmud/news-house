@@ -1,0 +1,10 @@
+﻿@model NewsHouse.Models.Category
+
+<div class="mb-2">
+    <div class="col-12">
+        @Html.DropDownListFor(x => x.CategoryId, ViewData["Categories"] as SelectList, "Select category", htmlAttributes: new { @class = "form-select mb-1" })
+    </div>
+    <div class="col-2">
+        <a href="#" id="btnDeleteCat" class="btn btn-sm btn-danger">Remove<i class="fa fa-trash"></i></a>
+    </div>
+</div>
