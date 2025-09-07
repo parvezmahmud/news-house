@@ -19,38 +19,7 @@
 
         protected async override void Seed(NewsHouse.Models.ApplicationDbContext context)
         {
-            //  This method will be called after migrating to the latest version.
-
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method
-            //  to avoid creating duplicate seed data.
-            //AccountController ac= new AccountController();
-            //var user = new RegisterViewModel[]
-            //{
-            //    new RegisterViewModel{FullName="Mr. A", Email="mra@gmail.com", Password="1234", ConfirmPassword="1234"},
-            //    new RegisterViewModel{FullName="Mr. B", Email="mrb@gmail.com", Password="1234", ConfirmPassword="1234"},
-            //    new RegisterViewModel{FullName="Mr. C", Email="mrc@gmail.com", Password="1234", ConfirmPassword="1234"}
-            //};
-            //foreach(var item in user)
-            //{
-            //   await ac.Register(item);
-            //}
-            //ApplicationUser application = new ApplicationUser();
-
-            ////Add roles
-            //var roles = new IdentityRole[]
-            //{
-            //    new IdentityRole{Id="1", Name="Admin"},
-            //    new IdentityRole{Id="2", Name="Author"}
-            //};
-            //foreach (var role in roles)
-            //{
-            //    context.Roles.Add(role);
-            //}
-
-            ////Assign roles
-            //var data = new IdentityUserRole { RoleId = "1" , UserId="asas"};
-            //var roleStore = new RoleStore<IdentityRole>(context);
-            //var userStore = new UserStore<ApplicationUser>(context);
+           
             string[] roles = new string[] { "Admin", "Author" };
             foreach (string role in roles)
             {
@@ -60,10 +29,10 @@
                 }
             }
 
-            
-                var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
-                var user = new ApplicationUser[]
-                {
+
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+            var user = new ApplicationUser[]
+            {
                     new ApplicationUser{
                     Email = "mra@gmail.com",
                     UserName = "Mr.A",
@@ -95,14 +64,14 @@
                     LockoutEnabled = true,
                     }
 
-                };
-                foreach(var item in user)
-                {
-                    userManager.Create(item);
-                    userManager.AddToRole(item.Id, "Author");
-                }
-                
-            
+            };
+            foreach (var item in user)
+            {
+                userManager.Create(item);
+                userManager.AddToRole(item.Id, "Author");
+            }
+
+
 
 
 

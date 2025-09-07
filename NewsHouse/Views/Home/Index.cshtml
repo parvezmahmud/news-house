@@ -1,33 +1,48 @@
 ﻿@{
     ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<main>
-    <section class="row" aria-labelledby="aspnetTitle">
-        <h1 id="title">ASP.NET</h1>
-        <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-        <p><a href="https://asp.net" class="btn btn-primary btn-md">Learn more &raquo;</a></p>
-    </section>
+<div class="container mt-5">
 
-    <div class="row">
-        <section class="col-md-4" aria-labelledby="gettingStartedTitle">
-            <h2 id="gettingStartedTitle">Getting started</h2>
-            <p>
-                ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-                enables a clean separation of concerns and gives you full control over markup
-                for enjoyable, agile development.
-            </p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-        </section>
-        <section class="col-md-4" aria-labelledby="librariesTitle">
-            <h2 id="librariesTitle">Get more libraries</h2>
-            <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-        </section>
-        <section class="col-md-4" aria-labelledby="hostingTitle">
-            <h2 id="hostingTitle">Web Hosting</h2>
-            <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-        </section>
+    <!-- Hero Section -->
+    <div class="jumbotron text-center bg-info text-white rounded-3 p-5 shadow-sm mb-5">
+        <h1 class="display-4 fw-bold">Welcome to News Manager</h1>
+        <p class="lead">Your one-stop platform to manage news, categories, and tags.</p>
+        @Html.ActionLink("View All Articles", "Index", "News", null, new { @class = "btn btn-light btn-lg mt-3" })
     </div>
-</main>
+
+    <!-- Quick Links Section -->
+    <h3 class="text-primary mb-4">Quick Access</h3>
+    <div class="row g-4 mb-5">
+        <div class="col-md-4">
+            <div class="card text-center shadow-sm h-100 p-3">
+                <div class="card-body">
+                    <h5 class="card-title">Categories</h5>
+                    <p class="card-text">Browse news by categories to find your favorite topics.</p>
+                    @Html.ActionLink("View Categories", "Index", "Categories", null, new { @class = "btn btn-info btn-sm" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center shadow-sm h-100 p-3">
+                <div class="card-body">
+                    <h5 class="card-title">Tags</h5>
+                    <p class="card-text">Discover trending tags to follow breaking news stories.</p>
+                    @Html.ActionLink("View Tags", "Index", "Tags", null, new { @class = "btn btn-info btn-sm" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center shadow-sm h-100 p-3">
+                <div class="card-body">
+                    <h5 class="card-title">Recent News</h5>
+                    <p class="card-text">Check out the most recent updates from all categories and tags.</p>
+                    @Html.ActionLink("View All News", "Index", "News", null, new { @class = "btn btn-info btn-sm" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+

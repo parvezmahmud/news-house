@@ -3,7 +3,7 @@
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Initial : DbMigration
+    public partial class initial : DbMigration
     {
         public override void Up()
         {
@@ -34,14 +34,6 @@
                 .Index(t => t.Author_AuthorId);
             
             CreateTable(
-                "dbo.CategoryTrackers",
-                c => new
-                    {
-                        ID = c.Int(nullable: false, identity: true),
-                    })
-                .PrimaryKey(t => t.ID);
-            
-            CreateTable(
                 "dbo.Categories",
                 c => new
                     {
@@ -49,14 +41,6 @@
                         CategoryTitle = c.String(),
                     })
                 .PrimaryKey(t => t.CategoryId);
-            
-            CreateTable(
-                "dbo.TagTrackers",
-                c => new
-                    {
-                        ID = c.Int(nullable: false, identity: true),
-                    })
-                .PrimaryKey(t => t.ID);
             
             CreateTable(
                 "dbo.Tags",
@@ -136,56 +120,30 @@
                 .Index(t => t.UserId);
             
             CreateTable(
-                "dbo.CategoryCategoryTrackers",
+                "dbo.CategoryNews",
                 c => new
                     {
                         Category_CategoryId = c.Int(nullable: false),
-                        CategoryTracker_ID = c.Int(nullable: false),
+                        News_NewsId = c.Int(nullable: false),
                     })
-                .PrimaryKey(t => new { t.Category_CategoryId, t.CategoryTracker_ID })
+                .PrimaryKey(t => new { t.Category_CategoryId, t.News_NewsId })
                 .ForeignKey("dbo.Categories", t => t.Category_CategoryId, cascadeDelete: true)
-                .ForeignKey("dbo.CategoryTrackers", t => t.CategoryTracker_ID, cascadeDelete: true)
+                .ForeignKey("dbo.News", t => t.News_NewsId, cascadeDelete: true)
                 .Index(t => t.Category_CategoryId)
-                .Index(t => t.CategoryTracker_ID);
-            
-            CreateTable(
-                "dbo.CategoryTrackerNews",
-                c => new
-                    {
-                        CategoryTracker_ID = c.Int(nullable: false),
-                        News_NewsId = c.Int(nullable: false),
-                    })
-                .PrimaryKey(t => new { t.CategoryTracker_ID, t.News_NewsId })
-                .ForeignKey("dbo.CategoryTrackers", t => t.CategoryTracker_ID, cascadeDelete: true)
-                .ForeignKey("dbo.News", t => t.News_NewsId, cascadeDelete: true)
-                .Index(t => t.CategoryTracker_ID)
                 .Index(t => t.News_NewsId);
             
             CreateTable(
-                "dbo.TagTrackerNews",
-                c => new
-                    {
-                        TagTracker_ID = c.Int(nullable: false),
-                        News_NewsId = c.Int(nullable: false),
-                    })
-                .PrimaryKey(t => new { t.TagTracker_ID, t.News_NewsId })
-                .ForeignKey("dbo.TagTrackers", t => t.TagTracker_ID, cascadeDelete: true)
-                .ForeignKey("dbo.News", t => t.News_NewsId, cascadeDelete: true)
-                .Index(t => t.TagTracker_ID)
-                .Index(t => t.News_NewsId);
-            
-            CreateTable(
-                "dbo.TagsTagTrackers",
+                "dbo.TagsNews",
                 c => new
                     {
                         Tags_TagsId = c.Int(nullable: false),
-                        TagTracker_ID = c.Int(nullable: false),
+                        News_NewsId = c.Int(nullable: false),
                     })
-                .PrimaryKey(t => new { t.Tags_TagsId, t.TagTracker_ID })
+                .PrimaryKey(t => new { t.Tags_TagsId, t.News_NewsId })
                 .ForeignKey("dbo.Tags", t => t.Tags_TagsId, cascadeDelete: true)
-                .ForeignKey("dbo.TagTrackers", t => t.TagTracker_ID, cascadeDelete: true)
+                .ForeignKey("dbo.News", t => t.News_NewsId, cascadeDelete: true)
                 .Index(t => t.Tags_TagsId)
-                .Index(t => t.TagTracker_ID);
+                .Index(t => t.News_NewsId);
             
         }
         
@@ -195,23 +153,15 @@
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
-            DropForeignKey("dbo.TagsTagTrackers", "TagTracker_ID", "dbo.TagTrackers");
-            DropForeignKey("dbo.TagsTagTrackers", "Tags_TagsId", "dbo.Tags");
-            DropForeignKey("dbo.TagTrackerNews", "News_NewsId", "dbo.News");
-            DropForeignKey("dbo.TagTrackerNews", "TagTracker_ID", "dbo.TagTrackers");
-            DropForeignKey("dbo.CategoryTrackerNews", "News_NewsId", "dbo.News");
-            DropForeignKey("dbo.CategoryTrackerNews", "CategoryTracker_ID", "dbo.CategoryTrackers");
-            DropForeignKey("dbo.CategoryCategoryTrackers", "CategoryTracker_ID", "dbo.CategoryTrackers");
-            DropForeignKey("dbo.CategoryCategoryTrackers", "Category_CategoryId", "dbo.Categories");
+            DropForeignKey("dbo.TagsNews", "News_NewsId", "dbo.News");
+            DropForeignKey("dbo.TagsNews", "Tags_TagsId", "dbo.Tags");
+            DropForeignKey("dbo.CategoryNews", "News_NewsId", "dbo.News");
+            DropForeignKey("dbo.CategoryNews", "Category_CategoryId", "dbo.Categories");
             DropForeignKey("dbo.News", "Author_AuthorId", "dbo.Authors");
-            DropIndex("dbo.TagsTagTrackers", new[] { "TagTracker_ID" });
-            DropIndex("dbo.TagsTagTrackers", new[] { "Tags_TagsId" });
-            DropIndex("dbo.TagTrackerNews", new[] { "News_NewsId" });
-            DropIndex("dbo.TagTrackerNews", new[] { "TagTracker_ID" });
-            DropIndex("dbo.CategoryTrackerNews", new[] { "News_NewsId" });
-            DropIndex("dbo.CategoryTrackerNews", new[] { "CategoryTracker_ID" });
-            DropIndex("dbo.CategoryCategoryTrackers", new[] { "CategoryTracker_ID" });
-            DropIndex("dbo.CategoryCategoryTrackers", new[] { "Category_CategoryId" });
+            DropIndex("dbo.TagsNews", new[] { "News_NewsId" });
+            DropIndex("dbo.TagsNews", new[] { "Tags_TagsId" });
+            DropIndex("dbo.CategoryNews", new[] { "News_NewsId" });
+            DropIndex("dbo.CategoryNews", new[] { "Category_CategoryId" });
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
@@ -219,19 +169,15 @@
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
             DropIndex("dbo.News", new[] { "Author_AuthorId" });
-            DropTable("dbo.TagsTagTrackers");
-            DropTable("dbo.TagTrackerNews");
-            DropTable("dbo.CategoryTrackerNews");
-            DropTable("dbo.CategoryCategoryTrackers");
+            DropTable("dbo.TagsNews");
+            DropTable("dbo.CategoryNews");
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
             DropTable("dbo.AspNetUsers");
             DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetRoles");
             DropTable("dbo.Tags");
-            DropTable("dbo.TagTrackers");
             DropTable("dbo.Categories");
-            DropTable("dbo.CategoryTrackers");
             DropTable("dbo.News");
             DropTable("dbo.Authors");
         }

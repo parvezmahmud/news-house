@@ -1,34 +1,43 @@
 ﻿@model IEnumerable<NewsHouse.Models.Tags>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Tags Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="text-primary">Tags Manager</h2>
+        @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-success btn-sm" })
+    </div>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.TagsName)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.TagsName)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.TagsId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.TagsId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.TagsId })
-        </td>
-    </tr>
-}
-
-</table>
+    <div class="card shadow-sm rounded-3">
+        <div class="card-body p-0">
+            <table class="table table-hover table-striped mb-0 align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.TagsName)</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                <span class="badge bg-secondary">@item.TagsName</span>
+                            </td>
+                            <td class="text-center">
+                                <div class="btn-group btn-group-sm" role="group">
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.TagsId }, new { @class = "btn btn-primary text-white" })
+                                    @Html.ActionLink("Details", "Details", new { id = item.TagsId }, new { @class = "btn btn-info" })
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.TagsId }, new { @class = "btn btn-danger" })
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

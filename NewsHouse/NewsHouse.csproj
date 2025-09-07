@@ -178,9 +178,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202509041143287_Initial.cs" />
-    <Compile Include="Migrations\202509041143287_Initial.Designer.cs">
-      <DependentUpon>202509041143287_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\202509061425026_initial.cs" />
+    <Compile Include="Migrations\202509061425026_initial.Designer.cs">
+      <DependentUpon>202509061425026_initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -304,16 +304,20 @@
     <Content Include="Views\News\Index.cshtml" />
     <Content Include="Views\News\Create.cshtml" />
     <Content Include="Views\News\_addNewCategory.cshtml" />
+    <Content Include="Views\News\_addNewTag.cshtml" />
+    <Content Include="Views\News\Edit.cshtml" />
+    <Content Include="Views\News\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Images\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202509041143287_Initial.resx">
-      <DependentUpon>202509041143287_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202509061425026_initial.resx">
+      <DependentUpon>202509061425026_initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

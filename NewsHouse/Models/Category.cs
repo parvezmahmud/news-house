@@ -11,6 +11,6 @@ namespace NewsHouse.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int CategoryId { get; set; }
         public string CategoryTitle { get; set; }
-        public ICollection<CategoryTracker> CategoryTracker { get; set; }
+        public ICollection<News> News { get; set; }
     }
 }

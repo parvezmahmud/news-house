@@ -9,6 +9,6 @@ namespace NewsHouse.Models
     {
         public int TagsId { get; set; }
         public string TagsName { get; set; }
-        public ICollection<TagTracker> TagTracker { get; set; }
+        public ICollection<News> News { get; set; }
     }
 }

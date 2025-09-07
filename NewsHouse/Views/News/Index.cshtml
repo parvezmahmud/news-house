@@ -1,52 +1,76 @@
 ﻿@model IEnumerable<NewsHouse.Models.News>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "News Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="text-primary">Article manager</h2>
+        @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-success btn-sm" })
+    </div>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.NewsBody)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.HeaderImage)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Published)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NewsBody)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.HeaderImage)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Published)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.NewsId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.NewsId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.NewsId })
-        </td>
-    </tr>
-}
-
-</table>
+    <div class="card shadow-sm rounded-3">
+        <div class="card-body p-0">
+            <table class="table table-hover table-striped mb-0 align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.Title)</th>
+                        <th>@Html.DisplayNameFor(model => model.NewsBody)</th>
+                        <th>@Html.DisplayNameFor(model => model.HeaderImage)</th>
+                        <th>@Html.DisplayNameFor(m => m.Categories)</th>
+                        <th>@Html.DisplayNameFor(m => m.Tags)</th>
+                        <th>@Html.DisplayNameFor(model => model.Published)</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                <strong>@item.Title</strong>
+                            </td>
+                            <td class="text-truncate" style="max-width: 250px;">
+                                @item.NewsBody
+                            </td>
+                            <td>
+                                @if (!string.IsNullOrEmpty(item.HeaderImage))
+                                {
+                                    <img src="@Url.Content(item.HeaderImage)" alt="Header Image" class="img-thumbnail" style="max-height:60px;" />
+                                }
+                                else
+                                {
+                                    <span class="text-muted">No Image</span>
+                                }
+                            </td>
+                            <td>
+                                @foreach (var cat in item.Categories)
+                                {
+                                    <span class="badge bg-info text-dark me-1">@cat.CategoryTitle</span>
+                                }
+                            </td>
+                            <td>
+                                @foreach (var tag in item.Tags)
+                                {
+                                    <span class="badge bg-secondary me-1">@tag.TagsName</span>
+                                }
+                            </td>
+                            <td>
+                                @item.Published.ToString("yyyy-MM-dd")
+                            </td>
+                            <td class="text-center">
+                                <div class="btn-group btn-group-sm" role="group">
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.NewsId }, new { @class = "btn btn-primary text-white" })
+                                    @Html.ActionLink("Details", "Details", new { id = item.NewsId }, new { @class = "btn btn-info" })
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.NewsId }, new { @class = "btn btn-danger" })
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

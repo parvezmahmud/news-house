@@ -29,8 +29,6 @@ namespace NewsHouse.Models
         public DbSet<News> News { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Tags> Tags { get; set; }
-        public DbSet<CategoryTracker> CategoryTrackers { get; set; }
-        public DbSet<TagTracker> TagTrackers { get; set; }
 
         public static ApplicationDbContext Create()
         {

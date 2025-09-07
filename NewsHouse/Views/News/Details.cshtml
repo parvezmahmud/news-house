@@ -1,0 +1,78 @@
+﻿@model NewsHouse.Models.News
+
+@{
+    ViewBag.Title = "News Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-4">
+    <div class="card shadow-sm rounded-3">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">@Model.Title</h4>
+        </div>
+        <div class="card-body">
+
+            <!-- Header Image -->
+            @if (!string.IsNullOrEmpty(Model.HeaderImage))
+            {
+                <div class="mb-3 text-center">
+                    <img src="@Url.Content(Model.HeaderImage)" alt="Header Image" class="img-fluid rounded" style="max-height:200px;" />
+                </div>
+            }
+
+            <!-- News Body -->
+            <div class="mb-3">
+                <h5 class="fw-bold">News Body</h5>
+                <p>@Html.Raw(Model.NewsBody)</p>
+            </div>
+
+            <!-- Categories -->
+            <div class="mb-3">
+                <h5 class="fw-bold">Categories</h5>
+                @if (Model.Categories != null && Model.Categories.Any())
+                {
+                    foreach (var cat in Model.Categories)
+                    {
+                        <span class="badge bg-info text-dark me-1">@cat.CategoryTitle</span>
+                    }
+                }
+                else
+                {
+                    <span class="text-muted">No categories assigned</span>
+                }
+            </div>
+
+            <!-- Tags -->
+            <div class="mb-3">
+                <h5 class="fw-bold">Tags</h5>
+                @if (Model.Tags != null && Model.Tags.Any())
+                {
+                    foreach (var tag in Model.Tags)
+                    {
+                        <span class="badge bg-secondary me-1">@tag.TagsName</span>
+                    }
+                }
+                else
+                {
+                    <span class="text-muted">No tags assigned</span>
+                }
+            </div>
+
+            <!-- Metadata -->
+            <div class="mb-3">
+                <h5 class="fw-bold">Metadata</h5>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><strong>Archived:</strong> @(Model.IsArchived ? "Yes" : "No")</li>
+                    <li class="list-group-item"><strong>Published:</strong> @Model.Published.ToString("yyyy-MM-dd")</li>
+                </ul>
+            </div>
+
+            <!-- Actions -->
+            <div class="mt-3">
+                @Html.ActionLink("Edit", "Edit", new { id = Model.NewsId }, new { @class = "btn btn-warning text-white" })
+                @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-secondary ms-2" })
+            </div>
+
+        </div>
+    </div>
+</div>

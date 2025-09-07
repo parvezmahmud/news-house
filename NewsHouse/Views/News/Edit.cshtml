@@ -1,0 +1,80 @@
+﻿@model NewsHouse.Models.News
+
+@{
+    ViewBag.Title = "Edit News";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-4">
+    <div class="card shadow-sm rounded-3">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Edit News</h4>
+        </div>
+        <div class="card-body">
+            @using (Html.BeginForm("Edit", "News", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(model => model.NewsId)
+
+                <div class="mb-3">
+                    @Html.LabelFor(model => model.Title, new { @class = "form-label fw-bold" })
+                    @Html.TextBoxFor(model => model.Title, new { @class = "form-control", placeholder = "Enter news title" })
+                </div>
+
+                <div class="mb-3">
+                    @Html.LabelFor(model => model.NewsBody, new { @class = "form-label fw-bold" })
+                    @Html.TextAreaFor(model => model.NewsBody, new { @class = "form-control", rows = 6 })
+                </div>
+
+                <div class="mb-3">
+                    @Html.LabelFor(model => model.HeaderImage, new { @class = "form-label fw-bold" })
+                    <br />
+                    @if (!string.IsNullOrEmpty(Model.HeaderImage))
+                    {
+                        <img src="@Url.Content(Model.HeaderImage)" alt="Header Image" class="img-thumbnail mb-2" style="max-height:100px;" />
+                        <br />
+                    }
+                    <input type="file" name="HeaderImage" class="form-control" />
+                </div>
+
+                <div class="mb-3 form-check">
+                    @Html.CheckBoxFor(model => model.IsArchived, new { @class = "form-check-input" })
+                    @Html.LabelFor(model => model.IsArchived, new { @class = "form-check-label fw-bold" })
+                </div>
+
+                <div class="mb-3">
+                    <label class="fw-bold">Categories</label>
+                    <div class="d-flex flex-wrap">
+                        @foreach (var cat in ViewBag.Categories as List<NewsHouse.Models.Category>)
+                        {
+                            <div class="form-check me-3">
+                                <input type="checkbox" name="CategoryIds" value="@cat.CategoryId"
+                                       @(Model.Categories.Any(c => c.CategoryId == cat.CategoryId) ? "checked" : "")
+                                       class="form-check-input" />
+                                <label class="form-check-label">@cat.CategoryTitle</label>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="fw-bold">Tags</label>
+                    <div class="d-flex flex-wrap">
+                        @foreach (var tag in ViewBag.Tags as List<NewsHouse.Models.Tags>)
+                        {
+                            <div class="form-check me-3">
+                                <input type="checkbox" name="TagIds" value="@tag.TagsId"
+                                       @(Model.Tags.Any(t => t.TagsId == tag.TagsId) ? "checked" : "")
+                                       class="form-check-input" />
+                                <label class="form-check-label">@tag.TagsName</label>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+                @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-secondary ms-2" })
+            }
+        </div>
+    </div>
+</div>
