@@ -51,6 +51,8 @@ namespace NewsHouse.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include ="Title, NewsBody, HeaderImage, IsArchived")]NewsVM newsVM, DateTime dateTime, int[] CategoryId, int[] TagsId)
         {
+            var ID = UserInfo.GetUserId();
+            var author = db.Authors.FirstOrDefault(x=>x.User.Id==ID);
             News news = new News();
             HttpPostedFileBase file = newsVM.HeaderImage;
             if (file != null)
@@ -79,6 +81,7 @@ namespace NewsHouse.Controllers
             news.NewsBody =newsVM.NewsBody;
             news.IsArchived=newsVM.IsArchived;
             news.Published = dateTime;
+            news.Author=author;
             db.News.Add(news);
             db.SaveChanges();
             return RedirectToAction("Index");
