@@ -19,6 +19,7 @@ namespace NewsHouse.Models
         [Required]
         [DataType(DataType.EmailAddress)]
         public string EmailAddress { get; set; }
+        public virtual ApplicationUser User { get; set; }
         public ICollection<News> News { get; set; }
 
     }

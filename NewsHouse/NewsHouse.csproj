@@ -182,6 +182,14 @@
     <Compile Include="Migrations\202509061425026_initial.Designer.cs">
       <DependentUpon>202509061425026_initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202509071620525_AddedUserToAuthor.cs" />
+    <Compile Include="Migrations\202509071620525_AddedUserToAuthor.Designer.cs">
+      <DependentUpon>202509071620525_AddedUserToAuthor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202509080305252_AttachUserBeforeAssigningToAuthor.cs" />
+    <Compile Include="Migrations\202509080305252_AttachUserBeforeAssigningToAuthor.Designer.cs">
+      <DependentUpon>202509080305252_AttachUserBeforeAssigningToAuthor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Author.cs" />
@@ -318,6 +326,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202509061425026_initial.resx">
       <DependentUpon>202509061425026_initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202509071620525_AddedUserToAuthor.resx">
+      <DependentUpon>202509071620525_AddedUserToAuthor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202509080305252_AttachUserBeforeAssigningToAuthor.resx">
+      <DependentUpon>202509080305252_AttachUserBeforeAssigningToAuthor.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -31,45 +31,46 @@
 
 
             var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
-            var user = new ApplicationUser[]
+            var user1 = new ApplicationUser
             {
-                    new ApplicationUser{
-                    Email = "mra@gmail.com",
-                    UserName = "Mr.A",
-                    PhoneNumber = "",
-                    EmailConfirmed = true,
-                    PhoneNumberConfirmed = true,
-                    SecurityStamp = Guid.NewGuid().ToString("D"),
-                    PasswordHash = userManager.PasswordHasher.HashPassword("1234"),
-                    LockoutEnabled = true,
-                    },
-                    new ApplicationUser{
-                    Email = "mrb@gmail.com",
-                    UserName = "Mr.B",
-                    PhoneNumber = "",
-                    EmailConfirmed = true,
-                    PhoneNumberConfirmed = true,
-                    SecurityStamp = Guid.NewGuid().ToString("D"),
-                    PasswordHash = userManager.PasswordHasher.HashPassword("1234"),
-                    LockoutEnabled = true,
-                    },
-                    new ApplicationUser{
-                    Email = "mrc@gmail.com",
-                    UserName = "Mr.C",
-                    PhoneNumber = "",
-                    EmailConfirmed = true,
-                    PhoneNumberConfirmed = true,
-                    SecurityStamp = Guid.NewGuid().ToString("D"),
-                    PasswordHash = userManager.PasswordHasher.HashPassword("1234"),
-                    LockoutEnabled = true,
-                    }
-
+                Email = "mra@gmail.com",
+                UserName = "Mr.A",
+                PhoneNumber = "",
+                EmailConfirmed = true,
+                PhoneNumberConfirmed = true,
+                SecurityStamp = Guid.NewGuid().ToString("D"),
+                PasswordHash = userManager.PasswordHasher.HashPassword("1234"),
+                LockoutEnabled = true,
             };
-            foreach (var item in user)
+            var user2 = new ApplicationUser
             {
-                userManager.Create(item);
-                userManager.AddToRole(item.Id, "Author");
-            }
+                Email = "mrb@gmail.com",
+                UserName = "Mr.B",
+                PhoneNumber = "",
+                EmailConfirmed = true,
+                PhoneNumberConfirmed = true,
+                SecurityStamp = Guid.NewGuid().ToString("D"),
+                PasswordHash = userManager.PasswordHasher.HashPassword("1234"),
+                LockoutEnabled = true,
+            };
+            var user3 = new ApplicationUser
+            {
+                Email = "mrc@gmail.com",
+                UserName = "Mr.C",
+                PhoneNumber = "",
+                EmailConfirmed = true,
+                PhoneNumberConfirmed = true,
+                SecurityStamp = Guid.NewGuid().ToString("D"),
+                PasswordHash = userManager.PasswordHasher.HashPassword("1234"),
+                LockoutEnabled = true,
+            };
+
+            userManager.Create(user1);
+            userManager.Create(user2);
+            userManager.Create(user3);
+            userManager.AddToRole(user1.Id, "Author");
+            userManager.AddToRole(user2.Id, "Author");
+            userManager.AddToRole(user3.Id, "Admin");
 
 
 
@@ -77,11 +78,14 @@
 
 
             //Application Custom Data
-            var author = new Author[]
+            context.Users.Attach(user1);
+            context.Users.Attach(user2);
+            context.Users.Attach(user3);
+            var author = new Author[]   
             {
-                new Author {AuthorId=1, FullName="Mr. A", EmailAddress="mra@gmail.com"},
-                new Author {AuthorId=2, FullName="Mr. B", EmailAddress="mrb@gmail.com" },
-                new Author {AuthorId=3, FullName="Mr. C", EmailAddress="mrc@gmail.com" }
+                new Author {AuthorId=1, FullName="Mr. A", EmailAddress="mra@gmail.com", User = user1},
+                new Author {AuthorId=2, FullName="Mr. B", EmailAddress="mrb@gmail.com" , User=user2},
+                new Author {AuthorId=3, FullName="Mr. C", EmailAddress="mrc@gmail.com" , User=user3}
 
             };
             var tags = new Tags[]

@@ -151,12 +151,24 @@ namespace NewsHouse.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.FullName, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, LockoutEnabled=false, EmailConfirmed=true };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    Author author = new Author();
-                    ApplicationDbContext db = new ApplicationDbContext();
+                    using(var db = new ApplicationDbContext())
+                    {
+                        db.Users.Attach(user);
+                        Author author = new Author
+                        {
+                            FullName = model.FullName,
+                            EmailAddress = model.Email,
+                            User=user 
+                        };
+
+
+                        db.Authors.Add(author);
+                        db.SaveChanges();
+                    }
                     
                     //Create author when registration is succesfull.
 

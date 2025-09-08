@@ -1,4 +1,6 @@
-﻿using NewsHouse.Models;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using NewsHouse.Models;
 using NewsHouse.Models.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -11,12 +13,32 @@ using System.Web.Mvc;
 
 namespace NewsHouse.Controllers
 {
+    public static class UserInfo
+    {
+        public static string GetUserId()
+        {
+            
+            return HttpContext.Current.User.Identity.GetUserId();
+        }
+        public static string GetUserName()
+        {
+            return HttpContext.Current.User.Identity.GetUserName();
+        }
+        //public static string GetUserEmail()
+        //{
+        //    var user = manager.GetUse
+        //    var user = manager.Users.FirstOrDefault(x=>x.Id==GetUserId());
+        //    return user.Email;
+        //}
+    }
     public class NewsController: Controller
     {
         ApplicationDbContext db= new ApplicationDbContext();
         public ActionResult Index(int? id)
         {
-            var data = db.News.Include(x=>x.Categories).Include(y=>y.Tags).ToList();
+            string userId = UserInfo.GetUserId();
+            //ApplicationUser user = db.Users.Find(userId);
+            var data = db.News.Include(x=>x.Categories).Include(y=>y.Tags).Where(z=>z.Author.User.Id==userId).ToList();
             return View(data);
         }
 
