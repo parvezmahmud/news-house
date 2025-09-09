@@ -13,6 +13,7 @@ using System.Web.Mvc;
 
 namespace NewsHouse.Controllers
 {
+    [Authorize]
     public static class UserInfo
     {
         public static string GetUserId()
@@ -24,22 +25,35 @@ namespace NewsHouse.Controllers
         {
             return HttpContext.Current.User.Identity.GetUserName();
         }
-        //public static string GetUserEmail()
-        //{
-        //    var user = manager.GetUse
-        //    var user = manager.Users.FirstOrDefault(x=>x.Id==GetUserId());
-        //    return user.Email;
-        //}
     }
+    [Authorize]
     public class NewsController: Controller
     {
         ApplicationDbContext db= new ApplicationDbContext();
+
+
         public ActionResult Index(int? id)
         {
             string userId = UserInfo.GetUserId();
-            //ApplicationUser user = db.Users.Find(userId);
-            var data = db.News.Include(x=>x.Categories).Include(y=>y.Tags).Where(z=>z.Author.User.Id==userId).ToList();
-            return View(data);
+            var itemsPerPage = 4;
+            var numberOfData = db.News.Count();
+            var reminder = numberOfData % itemsPerPage;
+            var numberOfPages = (numberOfData - reminder) / itemsPerPage;
+            ViewData["NumberOfPages"] = numberOfPages + 1;
+            if (id != null)
+            {
+                var data = db.News.OrderBy(x => x.NewsId).Skip(id.Value * itemsPerPage).Take(itemsPerPage).Include(c=>c.Categories).Include(t=>t.Tags).Where(y=>y.Author.User.Id==userId).ToList();
+                return View(data);
+            }
+            else
+            {
+                var data = db.News.OrderBy(x=>x.NewsId).Take(itemsPerPage).Include(c => c.Categories).Include(t => t.Tags).Where(x=>x.Author.User.Id==userId).ToList();
+                return View(data);
+            }
+            //string userId = UserInfo.GetUserId();
+            ////ApplicationUser user = db.Users.Find(userId);
+            //var data = db.News.Include(x=>x.Categories).Include(y=>y.Tags).Where(z=>z.Author.User.Id==userId).ToList();
+            //return View(data);
         }
 
         [HttpGet]

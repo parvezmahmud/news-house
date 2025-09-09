@@ -10,6 +10,7 @@ using NewsHouse.Models;
 
 namespace NewsHouse.Controllers
 {
+    [Authorize]
     public class TagsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();

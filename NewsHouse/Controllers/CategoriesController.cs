@@ -10,6 +10,7 @@ using NewsHouse.Models;
 
 namespace NewsHouse.Controllers
 {
+    [Authorize]
     public class CategoriesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
