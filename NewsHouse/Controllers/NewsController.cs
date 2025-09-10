@@ -8,6 +8,7 @@ using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Security.Principal;
 using System.Web;
 using System.Web.Mvc;
 
@@ -25,6 +26,21 @@ namespace NewsHouse.Controllers
         {
             return HttpContext.Current.User.Identity.GetUserName();
         }
+        public static bool Admin()
+        {
+            var user = HttpContext.Current.User;
+            if (user.IsAdmin("Admin"))
+            {
+                return true;
+            }else
+            {
+                return false;
+            }
+        }
+        public static bool IsAdmin(this IPrincipal principal, params string[] roles)
+        {
+            return roles.Any(principal.IsInRole);
+        }
     }
     [Authorize]
     public class NewsController: Controller
@@ -40,20 +56,30 @@ namespace NewsHouse.Controllers
             var reminder = numberOfData % itemsPerPage;
             var numberOfPages = (numberOfData - reminder) / itemsPerPage;
             ViewData["NumberOfPages"] = numberOfPages + 1;
-            if (id != null)
+            if (UserInfo.Admin()) { 
+                if (id != null)
+                {
+                    var data = db.News.OrderByDescending(x => x.NewsId).Skip(id.Value * itemsPerPage).Take(itemsPerPage).Include(c => c.Categories).Include(t => t.Tags).Include(a => a.Author).ToList();
+                    return View(data);
+                }
+                else
+                {
+                    var data = db.News.OrderByDescending(x => x.NewsId).Take(itemsPerPage).Include(c => c.Categories).Include(t => t.Tags).Include(a=>a.Author).ToList();
+                    return View(data);
+                }
+            }else
             {
-                var data = db.News.OrderBy(x => x.NewsId).Skip(id.Value * itemsPerPage).Take(itemsPerPage).Include(c=>c.Categories).Include(t=>t.Tags).Where(y=>y.Author.User.Id==userId).ToList();
-                return View(data);
+                if (id != null)
+                {
+                     var data = db.News.OrderByDescending(x => x.NewsId).Skip(id.Value * itemsPerPage).Take(itemsPerPage).Include(c => c.Categories).Include(t => t.Tags).Where(y => y.Author.User.Id == userId).ToList();
+                    return View(data);
+                }
+                else
+                {
+                     var data = db.News.OrderByDescending(x => x.NewsId).Take(itemsPerPage).Include(c => c.Categories).Include(t => t.Tags).Where(x => x.Author.User.Id == userId).ToList();
+                    return View(data);
+                }
             }
-            else
-            {
-                var data = db.News.OrderBy(x=>x.NewsId).Take(itemsPerPage).Include(c => c.Categories).Include(t => t.Tags).Where(x=>x.Author.User.Id==userId).ToList();
-                return View(data);
-            }
-            //string userId = UserInfo.GetUserId();
-            ////ApplicationUser user = db.Users.Find(userId);
-            //var data = db.News.Include(x=>x.Categories).Include(y=>y.Tags).Where(z=>z.Author.User.Id==userId).ToList();
-            //return View(data);
         }
 
         [HttpGet]
@@ -192,8 +218,34 @@ namespace NewsHouse.Controllers
         [HttpGet]
         public ActionResult Details(int id)
         {
-            var data = db.News.Include(x=>x.Categories).Include(y=>y.Tags).FirstOrDefault(m=>m.NewsId==id);
+            var data = db.News.Include(x=>x.Categories).Include(y=>y.Tags).Include(a=>a.Author).FirstOrDefault(m=>m.NewsId==id);
             return View(data);
+        }
+
+        [HttpGet]
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var data = db.News.Include(x=>x.Categories).Include(t=>t.Tags).Include(a=>a.Author).ToList();
+            News news = data.FirstOrDefault(x=>x.NewsId==id); 
+            if (news == null)
+            {
+                return HttpNotFound();
+            }
+            return View(news);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete(int id)
+        {
+            var data = db.News.Find(id);
+            db.News.Remove(data);
+            db.SaveChanges();
+            return RedirectToAction("Index");
         }
     }
 }

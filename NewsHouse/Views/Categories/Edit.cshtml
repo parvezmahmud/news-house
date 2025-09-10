@@ -5,8 +5,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Edit</h2>
-
 
 @using (Html.BeginForm())
 {
@@ -19,7 +17,8 @@
         @Html.HiddenFor(model => model.CategoryId)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.CategoryTitle, htmlAttributes: new { @class = "control-label col-md-2" })
+            @*@Html.LabelFor(model => model.CategoryTitle, htmlAttributes: new { @class = "control-label col-md-2" })*@
+            <label class="control-label col-md-2 m-1 fw-bold">Category Name</label>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.CategoryTitle, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.CategoryTitle, "", new { @class = "text-danger" })
@@ -28,14 +27,14 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-primary btn-sm m-2" />
+                <input type="submit" value="Save" class="btn btn-primary btn-sm my-2" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-outline-info me-2" })
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-info btn-sm" })
 </div>
 
 @section Scripts {

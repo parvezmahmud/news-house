@@ -18,7 +18,7 @@
             AutomaticMigrationsEnabled = false;
         }
 
-        protected async override void Seed(NewsHouse.Models.ApplicationDbContext context)
+        protected override void Seed(NewsHouse.Models.ApplicationDbContext context)
         {
            
             string[] roles = new string[] { "Admin", "Author" };

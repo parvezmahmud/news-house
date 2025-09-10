@@ -7,7 +7,7 @@
 
 <div class="container mt-4">
     <div class="card shadow-sm rounded-3">
-        <div class="card-header bg-primary text-white">
+        <div class="card-header bg-info text-white">
             <h4 class="mb-0">@Model.Title</h4>
         </div>
         <div class="card-body">
@@ -24,6 +24,10 @@
             <div class="mb-3">
                 <h5 class="fw-bold">News Body</h5>
                 <p>@Html.Raw(Model.NewsBody)</p>
+            </div>
+            <div class="mb-3">
+                <h5 class="fw-bold">Author</h5>
+                <p class="badge bg-warning text-dark p-2">@Html.Raw(Model.Author.FullName)</p>
             </div>
 
             <!-- Categories -->
@@ -58,9 +62,8 @@
                 }
             </div>
 
-            <!-- Metadata -->
+
             <div class="mb-3">
-                <h5 class="fw-bold">Metadata</h5>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item"><strong>Archived:</strong> @(Model.IsArchived ? "Yes" : "No")</li>
                     <li class="list-group-item"><strong>Published:</strong> @Model.Published.ToString("yyyy-MM-dd")</li>
