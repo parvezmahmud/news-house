@@ -16,26 +16,26 @@
             <!-- Main Form Column -->
             <div class="col-12 col-lg-6 mb-4">
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <div class="form-group">
+                <div class="form-group my-2">
                     @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label" })
                     @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
                 </div>
 
-                <div class="form-group">
+                <div class="form-group my-2">
                     @Html.LabelFor(model => model.NewsBody, htmlAttributes: new { @class = "control-label" })
                     @Html.TextAreaFor(model => model.NewsBody, new { @class = "form-control", rows = 6, style = "resize:vertical;" })
                     @Html.ValidationMessageFor(model => model.NewsBody, "", new { @class = "text-danger" })
                 </div>
 
-
-                <div class="form-group">
+                 
+                <div class="form-group my-2">
                     @Html.LabelFor(model => model.HeaderImage, htmlAttributes: new { @class = "control-label" })
                     @Html.TextBoxFor(m => m.HeaderImage, new { type = "file", @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.HeaderImage, "", new { @class = "text-danger" })
                 </div>
 
-                <div class="form-group form-check">
+                <div class="form-group my-2 form-check">
                     @Html.EditorFor(model => model.IsArchived, new { htmlAttributes = new { @class = "form-check-input" } })
                     @Html.LabelFor(model => model.IsArchived, htmlAttributes: new { @class = "form-check-label" })
                     @Html.ValidationMessageFor(model => model.IsArchived, "", new { @class = "text-danger" })
@@ -76,13 +76,13 @@
 
         <!-- Submit button -->
         <div class="form-group mt-3">
-            <input type="submit" value="Create" class="btn btn-success" />
+            <input type="submit" value="Create" class="btn btn-sm btn-primary" />
         </div>
     </div>
 }
 
 <div class="mt-3">
-    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-secondary" })
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-secondary btn-sm mx-2" })
 </div>
 
 @section Scripts {

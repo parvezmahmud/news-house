@@ -21,7 +21,7 @@
         protected override void Seed(NewsHouse.Models.ApplicationDbContext context)
         {
            
-            string[] roles = new string[] { "Admin", "Author" };
+            string[] roles = new string[] { "Admin","Manager", "Author" };
             foreach (string role in roles)
             {
                 if (!context.Roles.Any(r => r.Name == role))
@@ -70,7 +70,7 @@
             userManager.Create(user2);
             userManager.Create(user3);
             userManager.AddToRole(user1.Id, "Author");
-            userManager.AddToRole(user2.Id, "Author");
+            userManager.AddToRole(user2.Id, "Manager");
             userManager.AddToRole(user3.Id, "Admin");
 
             context.Users.Attach(user1);

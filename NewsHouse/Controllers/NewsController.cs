@@ -171,7 +171,7 @@ namespace NewsHouse.Controllers
 
             if (TryUpdateModel(newsToUpdate, "", new string[] { "Title", "NewsBody", "IsArchived" }))
             {
-                // Handle image upload
+               
                 if (HeaderImage != null && HeaderImage.ContentLength > 0)
                 {
                     string filePath = Path.Combine("/Images/", DateTime.Now.Ticks.ToString() + Path.GetExtension(HeaderImage.FileName));
@@ -179,7 +179,7 @@ namespace NewsHouse.Controllers
                     newsToUpdate.HeaderImage = filePath;
                 }
 
-                // Update categories
+                
                 newsToUpdate.Categories.Clear();
                 if (CategoryIds != null)
                 {
@@ -191,7 +191,7 @@ namespace NewsHouse.Controllers
                     }
                 }
 
-                // Update tags
+                
                 newsToUpdate.Tags.Clear();
                 if (TagIds != null)
                 {
@@ -209,7 +209,7 @@ namespace NewsHouse.Controllers
                 return RedirectToAction("Index");
             }
 
-            // Reload dropdowns
+            
             ViewBag.Categories = db.Categories.ToList();
             ViewBag.Tags = db.Tags.ToList();
 
