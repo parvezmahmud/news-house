@@ -2,6 +2,7 @@
 using Microsoft.AspNet.Identity.EntityFramework;
 using NewsHouse.Models;
 using NewsHouse.Models.ViewModel;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -83,6 +84,14 @@ namespace NewsHouse.Controllers
         }
 
         [HttpGet]
+        public JsonResult Search(string searchText)
+        {
+            var filtered = db.News.Where(n=>n.Title.ToLower().Contains(searchText.ToLower())).Select(a=>new {a.NewsId, a.Title}).ToList();
+            return Json(filtered, JsonRequestBehavior.AllowGet);
+        }
+
+
+        [HttpGet]
         public ActionResult Create()
         {
             return View();
@@ -124,6 +133,7 @@ namespace NewsHouse.Controllers
             news.Author=author;
             db.News.Add(news);
             db.SaveChanges();
+            TempData["Success"] = "Article created successfully!";
             return RedirectToAction("Index");
         }
 

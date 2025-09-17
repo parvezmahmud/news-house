@@ -41,6 +41,11 @@
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
     <script type="text/javascript">
+        $(document).ready(function () {
+            $('tempSuccess').delay(1000).hide();
+        });
+    </script>
+    <script type="text/javascript">
         $("#btnPlus").click(function (e) {
             e.preventDefault();
             var spotContainer = $("#container");
@@ -74,6 +79,56 @@
             e.preventDefault();
             $(this).parent().parent().remove();
         })
+    </script>
+    <script>
+    $(document).ready(function () {
+
+        $('#searchBox').on('input', function () {
+            var query = $(this).val();
+
+            if (query.length >= 2) {
+                $.ajax({
+                    url: '@Url.Action("Search", "News")',
+                    data: { term: query },
+                    type: 'GET',
+                    success: function (data) {
+
+                        $('#searchResults').empty().show();
+
+
+                        if (data.length > 0) {
+                            $.each(data, function (index, item) {
+                                var li = $('<li>')
+                                    .text(item.Title)
+                                    .attr('data-id', item.NewsId)
+                                    .on('click', function () {
+
+                                        alert(': ' + item.Title);
+                                    });
+
+                                $('#searchResults').append(li);
+                            });
+                        } else {
+                            $('#searchResults').append('<li>No results found</li>');
+                        }
+                    },
+                    error: function () {
+                        alert('An error occurred while searching.');
+                    }
+                });
+            } else {
+
+                $('#searchResults').empty().hide();
+            }
+        });
+
+
+        $(document).click(function (e) {
+            if (!$(e.target).closest('#searchBox').length && !$(e.target).closest('#searchResults').length) {
+                $('#searchResults').hide();
+            }
+        });
+    });
     </script>
 </body>
 </html>

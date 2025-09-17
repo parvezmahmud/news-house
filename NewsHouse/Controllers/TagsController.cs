@@ -36,13 +36,13 @@ namespace NewsHouse.Controllers
             return View(tags);
         }
 
-
+        [Authorize(Roles = "Admin, Manager")]
         public ActionResult Create()
         {
             return View();
         }
 
-
+        [Authorize(Roles = "Admin, Manager")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "TagsId,TagsName")] Tags tags)
@@ -57,7 +57,7 @@ namespace NewsHouse.Controllers
             return View(tags);
         }
 
-
+        [Authorize(Roles = "Admin, Manager")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -73,6 +73,7 @@ namespace NewsHouse.Controllers
         }
 
 
+        [Authorize(Roles = "Admin, Manager")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "TagsId,TagsName")] Tags tags)
@@ -86,7 +87,7 @@ namespace NewsHouse.Controllers
             return View(tags);
         }
 
-
+        [Authorize(Roles = "Admin, Manager")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -102,6 +103,7 @@ namespace NewsHouse.Controllers
         }
 
 
+        [Authorize(Roles = "Admin, Manager")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

@@ -6,8 +6,20 @@
 }
 
 <div class="container mt-4">
+    <div id="tempSuccess">
+        @{
+            if (TempData["Success"] != null)
+            {
+                <div  class="alert alert-success">
+                    @TempData["Success"]
+                </div>
+            }
+        }
+    </div>
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h2 class="text-primary">Article manager</h2>
+        @*<input id="searchBox" type="text" />
+        <ul id="searchResults" style="list-style-type:none;display:none"></ul>*@
         @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-success btn-sm" })
     </div>
 
@@ -99,3 +111,4 @@ else
         </div>
     </div>
 </div>
+
